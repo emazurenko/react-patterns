@@ -3,4 +3,8 @@
 	border-radius: 5px;
 	background-color: antiquewhite;
 	cursor: pointer;
+
+	&:hover {
+		background-color: bisque;
+	}
 }

@@ -1,48 +1,38 @@
 import "./App.scss";
-import { MemberCard } from "../src/components/memberCard";
-import { useEffect, useState } from "react";
-import { UserProps } from "./components/memberCard/types";
-import { ButtonWithLabel } from "./components/buttonWithLabel";
+import {MemberCard} from "../src/components/memberCard";
+import {useCallback, useEffect, useState} from "react";
+import {UserProps} from "./components/memberCard/types";
 import Form from "./components/form";
-import { Tabs } from "./components/tabs";
+import {Tabs} from "./components/tabs";
+import {getUsers} from "./api/users";
+import {UserList} from "./components/userList";
+import {User} from "./types";
 
 export default function App() {
-  const [users, setUsers] = useState<UserProps[]>([]);
-  const [moreUsers, setMoreUsers] = useState<UserProps[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [addedUser, setAddedUser] = useState<UserProps | null>(null);
-  const [tabForm, setTabForm] = useState(true);
+  const [isTabForm, setTabForm] = useState(true);
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
-      .then((res) => setUsers(res));
+    getUsers().then((res) => setUsers(res));
   }, []);
 
-  const onButtonClick = () => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-    .then((response) => response.json())
-    .then((res) => setMoreUsers(res));
+  const handleMoreUsers = () => {
+    getUsers().then((res) => setUsers(prevUsers => [...prevUsers, ...res]))
   };
 
-  const handleUserAddition = (user: UserProps) => {
+  const handleUserAddition = useCallback((user: UserProps) => {
     setAddedUser(user);
-};
+  }, []);
 
   return (
-    <div className="App">
-      <Tabs onChange={setTabForm}/>
-      {!tabForm && users.map((user) => <MemberCard name={user.name} phone={user.phone} username={user.username} website={user.website} />)}
-      {!tabForm && moreUsers.map((user) => <MemberCard name={user.name} phone={user.phone} username={user.username} website={user.website} />)}
-      {!tabForm && <ButtonWithLabel onClick={onButtonClick}>more users</ButtonWithLabel>}
-      {tabForm && <Form onUserAddition={handleUserAddition}  />}
-      {addedUser && (
-                <MemberCard
-                    name={addedUser.name}
-                    phone={addedUser.phone}
-                    username={addedUser.username}
-                    website={addedUser.website}
-                />
-            )}
-    </div>
+      <div className="App">
+        <Tabs onChange={setTabForm}/>
+        {isTabForm
+            ? <Form onUserAddition={handleUserAddition}/>
+            : <UserList users={users} onClickMoreUsers={handleMoreUsers}/>
+        }
+        {addedUser && <MemberCard {...addedUser}/>}
+      </div>
   );
 }

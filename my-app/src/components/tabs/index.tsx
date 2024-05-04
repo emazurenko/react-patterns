@@ -1,11 +1,20 @@
-import { Button } from "../button";
+import {memo} from "react";
+import {withToggleButton} from "../withToggleButton";
+import {ButtonWithLabel} from "../buttonWithLabel";
+import "./style.scss";
 
-export const Tabs = ({ onChange }: { onChange: (tab: boolean) => void }) => {
+interface TabsType {
+  onChange: (tab: boolean) => void;
+}
 
-	return (
-		<div style={{ width: '100%', display: 'flex', gap: '15px', justifyContent: 'center', marginBottom: '20px' }}>
-			<Button onClick={() => onChange(false)}>form</Button>
-			<Button onClick={() => onChange(true)}>users</Button>
-		</div>
-	);
-};
+export const Tabs = memo<TabsType>(({onChange}) => {
+  const Toggle = withToggleButton
+    ({title: 'Set mode:', textOn: 'users', textOff: 'form', onToggle: onChange})
+    (ButtonWithLabel);
+
+  return (
+      <div className="tabs">
+        <Toggle/>
+      </div>
+  );
+});

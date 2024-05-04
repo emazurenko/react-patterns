@@ -1,15 +1,14 @@
-.App, #root {
+.user-list {
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  width: 900px;
-  height: 100%;
+  gap: 10px;
+  padding: 50px;
 }
 
-* {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
+.user-list__button-more {
+  margin-bottom: 20px;
 }
+
