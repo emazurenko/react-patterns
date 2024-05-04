@@ -1,33 +1,22 @@
+$font_size: 18px;
+$line_height: $font_size * 1.2;
+$padding: 15px;
+
 .member-card {
-	 border: 1px solid black;
-	width: 200px;
-	border-radius: 10px;
-	.title {
-	  font-size: 18px;
-	  color: black;
-	  font-weight: 700;
-	  padding: 15px;
-	}
-  
-	.info {
-	  border-top: 1px solid black;
-	  background-color: pink;
-	  width: 198px;
-	  padding: 5px;
-	  display: flex;
-	  align-items: center;
-	  justify-items: center;
-	  flex-direction: column;
-	  border-radius: 0px 0px 10px 10px;
-  
-	  .list-item {
-		font-size: 15px;
-		color: dark-gray;
-		margin-top: 10px;
-		display: flex;
-		align-items: center;
-		justify-items: center;
-	  }
-	}
+  border: 1px solid black;
+  width: 200px;
+  border-radius: 10px;
+
+  .member-card__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font_size;
+    min-height: ($line_height + $padding) * 2;
+    line-height: $line_height;
+    color: black;
+    font-weight: 700;
+    padding: $padding;
   }
+}
   

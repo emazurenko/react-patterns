@@ -1,14 +1,14 @@
-import { FC } from "react";
-import "./style.scss";
-
+import { memo} from "react";
 import { UserProps } from "./types";
 import { CardInfo } from "./parts/cardInfo";
+import "./style.scss";
 
-export const MemberCard: FC<UserProps> = ({ name, username, phone, website }) => {
+export const MemberCard = memo<UserProps>(({ name, ...props }) => {
+
   return (
     <div className="member-card">
-      <p className="title">{name}</p>
-      <CardInfo  username={username} phone={phone} website={website} />
+      <p className="member-card__title">{name}</p>
+      <CardInfo {...props}/>
     </div>
   );
-};
+});

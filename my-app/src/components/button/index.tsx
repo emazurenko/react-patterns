@@ -1,8 +1,14 @@
+import React, {FC} from "react";
+import cn from "clsx";
 import "./style.scss";
 
-export const Button = ({ onClick, children }: {onClick: () => void, children?: string}) => {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLElement> {
+	children?: string;
+}
+
+export const Button:FC<ButtonProps> = ({ className, children , ...props}) => {
 
 	return (
-		<button className="button" onClick={onClick}>{children}</button>
+		<button {...props} className={cn("button", className)}>{children}</button>
 	);
 };
